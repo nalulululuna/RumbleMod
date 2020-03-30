@@ -9,19 +9,21 @@ namespace RumbleMod
 {
     public class SettingsController : PersistentSingleton<SettingsController>
     {
+		private bool _initialized;
 		protected VRPlatformHelper _vrPlatformHelper;
 
-		public SettingsController()
+		public void Initialize()
 		{
 			_vrPlatformHelper = Resources.FindObjectsOfTypeAll<VRPlatformHelper>().FirstOrDefault();
 			if (_vrPlatformHelper == null)
-			{				
+			{
 				_vrPlatformHelper = new GameObject().AddComponent<VRPlatformHelper>();
 			}
 
 			_modEnabled = Configuration.PluginConfig.Instance.enabled;
 			_strength = Configuration.PluginConfig.Instance.strength;
 			_duration = Configuration.PluginConfig.Instance.duration;
+			_initialized = true;
 		}
 
 		private bool _modEnabled;
@@ -51,8 +53,15 @@ namespace RumbleMod
 		[UIAction("test")]
         private void ButtonClicked()
         {
+			if (!_initialized)
+			{
+				Initialize();
+			}
+
+			Logger.log.Info($"RumbleTest: duration={_duration}, strength={_strength}");
             PersistentSingleton<SharedCoroutineStarter>.instance.StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, _duration, _strength, 0));
-        }
+			PersistentSingleton<SharedCoroutineStarter>.instance.StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, _duration, _strength, 0));
+		}
 
 		public virtual IEnumerator OneShotRumbleCoroutine(XRNode node, float duration, float impulseStrength, float intervalDuration = 0f)
 		{
@@ -78,6 +87,7 @@ namespace RumbleMod
 		[UIAction("#apply")]
 		public void OnApply()
 		{
+			Logger.log.Info($"Apply: enabled={enabled}, duration={_duration}, strength={_strength}");
 			Configuration.PluginConfig.Instance.enabled = _modEnabled;
 			Configuration.PluginConfig.Instance.strength = _strength;
 			Configuration.PluginConfig.Instance.duration = _duration;
