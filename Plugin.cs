@@ -25,8 +25,6 @@ namespace RumbleMod
             instance = this;
             Logger.log = logger;
             Logger.log.Debug("Logger initialized.");
-
-            BSMLSettings.instance.AddSettingsMenu("Rumble Mod", $"{Name}.Views.Settings.bsml", SettingsController.instance);
         }
 
         [Init]
@@ -39,6 +37,7 @@ namespace RumbleMod
         [OnEnable]
         public void OnEnable()
         {
+            BSMLSettings.instance.AddSettingsMenu("Rumble Mod", $"{Name}.Views.Settings.bsml", SettingsController.instance);
             if (Configuration.PluginConfig.Instance.enabled)
             {
                 ApplyHarmonyPatches();
@@ -49,6 +48,7 @@ namespace RumbleMod
         public void OnDisable()
         {
             RemoveHarmonyPatches();
+            BSMLSettings.instance.RemoveSettingsMenu(SettingsController.instance);
         }
 
         public static void ApplyHarmonyPatches()
