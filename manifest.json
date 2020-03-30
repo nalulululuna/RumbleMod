@@ -1,0 +1,13 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+  "id": "RumbleMod",
+  "name": "RumbleMod",
+  "author": "Luluna",
+  "version": "0.0.1",
+  "description": "Modify the HitNote rumble parameters.",
+  "gameVersion": "1.8.0",
+  "dependsOn": {
+    "BeatSaberMarkupLanguage": "^1.2.0"
+  },
+  "features": []
+}
