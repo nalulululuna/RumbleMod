@@ -11,7 +11,8 @@ FYI. My current settings for Valve Index.
 You can feel the rumble more than the original even if the strength value is less than the original.
 
 ## DependsOn
-BeatSaberMarkupLanguage
+BeatSaberMarkupLanguage  
+BS Utils (for BeatSaberMarkupLanguage)
 
 ## Image
 ![RumbleMod](https://user-images.githubusercontent.com/62907586/77962414-853c0780-7316-11ea-84e0-f300f75e4cfd.jpg)
