@@ -55,6 +55,7 @@ namespace RumbleMod
         {
             try
             {
+                SettingsController.instance.UpdateHapticsClips();
                 Logger.log.Debug("Applying Harmony patches.");
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
             }

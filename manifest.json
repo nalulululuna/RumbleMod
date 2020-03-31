@@ -3,8 +3,8 @@
   "id": "RumbleMod",
   "name": "RumbleMod",
   "author": "Luluna",
-  "version": "0.0.3",
-  "description": "Modify the HitNote rumble parameters.",
+  "version": "0.0.4",
+  "description": "Modify the controller rumble parameters.",
   "gameVersion": "1.8.0",
   "dependsOn": {
     "BeatSaberMarkupLanguage": "^1.2.0",

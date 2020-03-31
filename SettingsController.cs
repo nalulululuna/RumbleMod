@@ -1,4 +1,5 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
+using IPA.Utilities;
 using System;
 using System.Collections;
 using System.Linq;
@@ -10,9 +11,12 @@ namespace RumbleMod
     public class SettingsController : PersistentSingleton<SettingsController>
     {
         private bool _initialized;
-        protected VRPlatformHelper _vrPlatformHelper;
+        private VRPlatformHelper _vrPlatformHelper;
 
-        public void Initialize()
+        public OVRHapticsClip hapticsClipHitNote { get; private set; }
+        public OVRHapticsClip hapticsClipContinuous { get; private set; }
+
+        private void Initialize()
         {
             _vrPlatformHelper = Resources.FindObjectsOfTypeAll<VRPlatformHelper>().FirstOrDefault();
             if (_vrPlatformHelper == null)
@@ -23,6 +27,7 @@ namespace RumbleMod
             _modEnabled = Configuration.PluginConfig.Instance.enabled;
             _strength = Configuration.PluginConfig.Instance.strength;
             _duration = Configuration.PluginConfig.Instance.duration;
+            _strength_continuous = Configuration.PluginConfig.Instance.strength_continuous;
             _initialized = true;
         }
 
@@ -50,20 +55,78 @@ namespace RumbleMod
             set => _duration = value;
         }
 
-        [UIAction("test")]
-        private void ButtonClicked()
+        private float _strength_continuous;
+        [UIValue("strength_continuous")]
+        public float strength_continuous
+        {
+            get => Configuration.PluginConfig.Instance.strength_continuous;
+            set => _strength_continuous = value;
+        }
+
+        private OVRHapticsClip CreateHapticsClip(float strength)
+        {
+            int count = Mathf.RoundToInt(strength * 4.0f);
+            if (count > 2)
+            {
+                OVRHapticsClip hapticsClip = new OVRHapticsClip(2 + count);
+                hapticsClip.WriteSample(0);
+                hapticsClip.WriteSample(0);
+                for (int i = 0; i < count; i++)
+                {
+                    byte sample = (i == 0) ? (byte)128 : byte.MaxValue;
+                    hapticsClip.WriteSample(sample);
+                }
+                return hapticsClip;
+            }
+            else
+            {
+                OVRHapticsClip hapticsClip = new OVRHapticsClip(4);
+                hapticsClip.WriteSample(0);
+                hapticsClip.WriteSample((byte)(16 * count));
+                hapticsClip.WriteSample((byte)(32 * count));
+                hapticsClip.WriteSample((byte)(64 * count));
+                return hapticsClip;
+            }
+        }
+
+        private void CreateHapticsClipIfOculus(float strength)
+        {
+            OculusVRHelper _oculusVRHelper = _vrPlatformHelper.GetField<OculusVRHelper, VRPlatformHelper>("_oculusVRHelper");
+            if (_oculusVRHelper != null)
+            {
+                _oculusVRHelper.SetField<OculusVRHelper, OVRHapticsClip>("_hapticsClip", CreateHapticsClip(strength));
+            }
+        }
+
+        [UIAction("test_hitnote")]
+        private void ButtonHitNoteClicked()
         {
             if (!_initialized)
             {
                 Initialize();
             }
 
-            Logger.log.Info($"RumbleTest: duration={_duration}, strength={_strength}");
-            PersistentSingleton<SharedCoroutineStarter>.instance.StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, _duration, _strength, 0));
-            PersistentSingleton<SharedCoroutineStarter>.instance.StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, _duration, _strength, 0));
+            Logger.log.Info($"RumbleTest: strength={_strength}, duration={_duration}");
+            CreateHapticsClipIfOculus(_strength);
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, _duration, _strength));
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, _duration, _strength));
         }
 
-        public virtual IEnumerator OneShotRumbleCoroutine(XRNode node, float duration, float impulseStrength, float intervalDuration = 0f)
+        [UIAction("test_saberwall")]
+        private void ButtonSaberWallClicked()
+        {
+            if (!_initialized)
+            {
+                Initialize();
+            }
+
+            Logger.log.Info($"RumbleTest: strength={_strength_continuous}, duration={1}");
+            CreateHapticsClipIfOculus(_strength_continuous);
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, 1, _strength_continuous));
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, 1, _strength_continuous));
+        }
+
+        private IEnumerator OneShotRumbleCoroutine(XRNode node, float duration, float impulseStrength, float intervalDuration = 0f)
         {
             long startTicks = DateTime.UtcNow.Ticks;
             float num = (float)(DateTime.UtcNow.Ticks - startTicks) / 1E+07f;
@@ -87,10 +150,12 @@ namespace RumbleMod
         [UIAction("#apply")]
         public void OnApply()
         {
-            Logger.log.Info($"Apply: enabled={enabled}, duration={_duration}, strength={_strength}");
+            Logger.log.Info($"Apply: enabled={enabled}, strength={_strength}, duration={_duration}, _strength_continuous={_strength_continuous}");
             Configuration.PluginConfig.Instance.enabled = _modEnabled;
             Configuration.PluginConfig.Instance.strength = _strength;
             Configuration.PluginConfig.Instance.duration = _duration;
+            Configuration.PluginConfig.Instance.strength_continuous = _strength_continuous;
+
             if (_modEnabled)
             {
                 Plugin.ApplyHarmonyPatches();
@@ -99,6 +164,13 @@ namespace RumbleMod
             {
                 Plugin.RemoveHarmonyPatches();
             }
+        }
+
+        // make sure call this before patching OculusVRHelper.TriggerHapticPulse
+        public void UpdateHapticsClips()
+        {
+            hapticsClipHitNote = CreateHapticsClip(Configuration.PluginConfig.Instance.strength);
+            hapticsClipContinuous = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_continuous);
         }
     }
 }
