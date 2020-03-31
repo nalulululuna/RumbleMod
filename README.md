@@ -6,7 +6,7 @@ The largest number of strength does not necessarily mean the largest rumble.
   
 FYI. My current settings for Valve Index.
 - Rumble Strength: 0.50
-- Rumble Duration: 0.25
+- Rumble Duration: 0.15
 
 You can feel the rumble more than the original even if the strength value is less than the original.
 
