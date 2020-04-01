@@ -1,5 +1,5 @@
 # RumbleMod for Beat Saber
-Modify the HitNote rumble parameters.
+A Beat Saber mod to modify the rumble parameters on hitting notes or touch sabers/walls.
 
 Don't expect too much, because you can't make the rumble stronger than the hardware specs.  
 The strength values above 1.0 may only work in the OculusVR environment(*),  
@@ -21,3 +21,6 @@ BS Utils (for BeatSaberMarkupLanguage)
 
 ## Image
 ![RumbleMod](https://user-images.githubusercontent.com/62907586/78046321-fd0b4000-73b1-11ea-8dff-054cc8614527.jpg)
+
+## Twitter
+https://twitter.com/nalulululuna

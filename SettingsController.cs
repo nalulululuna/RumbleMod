@@ -13,8 +13,9 @@ namespace RumbleMod
         private bool _initialized;
         private VRPlatformHelper _vrPlatformHelper;
 
-        public OVRHapticsClip hapticsClipHitNote { get; private set; }
-        public OVRHapticsClip hapticsClipContinuous { get; private set; }
+        public OVRHapticsClip hapticsClipNote { get; private set; }
+        public OVRHapticsClip hapticsClipSaber { get; private set; }
+        public OVRHapticsClip hapticsClipWall { get; private set; }
 
         private void Initialize()
         {
@@ -27,7 +28,8 @@ namespace RumbleMod
             _modEnabled = Configuration.PluginConfig.Instance.enabled;
             _strength = Configuration.PluginConfig.Instance.strength;
             _duration = Configuration.PluginConfig.Instance.duration;
-            _strength_continuous = Configuration.PluginConfig.Instance.strength_continuous;
+            _strength_saber = Configuration.PluginConfig.Instance.strength_saber;
+            _strength_wall = Configuration.PluginConfig.Instance.strength_wall;
             _initialized = true;
         }
 
@@ -55,12 +57,20 @@ namespace RumbleMod
             set => _duration = value;
         }
 
-        private float _strength_continuous;
-        [UIValue("strength_continuous")]
-        public float strength_continuous
+        private float _strength_saber;
+        [UIValue("strength_saber")]
+        public float strength_saber
         {
-            get => Configuration.PluginConfig.Instance.strength_continuous;
-            set => _strength_continuous = value;
+            get => Configuration.PluginConfig.Instance.strength_saber;
+            set => _strength_saber = value;
+        }
+
+        private float _strength_wall;
+        [UIValue("strength_wall")]
+        public float strength_wall
+        {
+            get => Configuration.PluginConfig.Instance.strength_wall;
+            set => _strength_wall = value;
         }
 
         private OVRHapticsClip CreateHapticsClip(float strength)
@@ -112,18 +122,32 @@ namespace RumbleMod
             StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, _duration, _strength));
         }
 
-        [UIAction("test_saberwall")]
-        private void ButtonSaberWallClicked()
+        [UIAction("test_hitsaber")]
+        private void ButtonHitSaberClicked()
         {
             if (!_initialized)
             {
                 Initialize();
             }
 
-            Logger.log.Info($"RumbleTest: strength={_strength_continuous}, duration={1}");
-            CreateHapticsClipIfOculus(_strength_continuous);
-            StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, 1, _strength_continuous));
-            StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, 1, _strength_continuous));
+            Logger.log.Info($"RumbleTest: strength={_strength_saber}, duration={1}");
+            CreateHapticsClipIfOculus(_strength_saber);
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, 1, _strength_saber));
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, 1, _strength_saber));
+        }
+
+        [UIAction("test_hitwall")]
+        private void ButtonHitWallClicked()
+        {
+            if (!_initialized)
+            {
+                Initialize();
+            }
+
+            Logger.log.Info($"RumbleTest: strength={_strength_wall}, duration={1}");
+            CreateHapticsClipIfOculus(_strength_wall);
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, 1, _strength_wall));
+            StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, 1, _strength_wall));
         }
 
         private IEnumerator OneShotRumbleCoroutine(XRNode node, float duration, float impulseStrength, float intervalDuration = 0f)
@@ -150,11 +174,12 @@ namespace RumbleMod
         [UIAction("#apply")]
         public void OnApply()
         {
-            Logger.log.Info($"Apply: enabled={enabled}, strength={_strength}, duration={_duration}, _strength_continuous={_strength_continuous}");
+            Logger.log.Info($"Apply: enabled={enabled}, strength={_strength}, duration={_duration}, strength_saber={_strength_saber}, strength_wall={_strength_wall}");
             Configuration.PluginConfig.Instance.enabled = _modEnabled;
             Configuration.PluginConfig.Instance.strength = _strength;
             Configuration.PluginConfig.Instance.duration = _duration;
-            Configuration.PluginConfig.Instance.strength_continuous = _strength_continuous;
+            Configuration.PluginConfig.Instance.strength_saber = _strength_saber;
+            Configuration.PluginConfig.Instance.strength_wall = _strength_wall;
 
             if (_modEnabled)
             {
@@ -169,8 +194,9 @@ namespace RumbleMod
         // make sure call this before patching OculusVRHelper.TriggerHapticPulse
         public void UpdateHapticsClips()
         {
-            hapticsClipHitNote = CreateHapticsClip(Configuration.PluginConfig.Instance.strength);
-            hapticsClipContinuous = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_continuous);
+            hapticsClipNote = CreateHapticsClip(Configuration.PluginConfig.Instance.strength);
+            hapticsClipSaber = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_saber);
+            hapticsClipWall = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_wall);
         }
     }
 }

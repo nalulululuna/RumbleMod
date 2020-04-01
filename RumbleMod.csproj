@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HarmonyPatches\SaberClashEffectPatch.cs" />
     <Compile Include="HarmonyPatches\OculusVRHelperPatch.cs" />
     <Compile Include="HarmonyPatches\HapticFeedbackControllerPatch.cs" />
     <Compile Include="Plugin.cs" />

@@ -14,7 +14,7 @@ namespace RumbleMod.HarmonyPatches
     {
         static bool Prefix(HapticFeedbackController __instance, XRNode node)
         {
-            if (Configuration.PluginConfig.Instance.duration > 0)
+            if ((Configuration.PluginConfig.Instance.strength > 0) && (Configuration.PluginConfig.Instance.duration > 0))
             {
                 __instance.Rumble(node, Configuration.PluginConfig.Instance.duration, Configuration.PluginConfig.Instance.strength, 0f);
             }
@@ -45,9 +45,13 @@ namespace RumbleMod.HarmonyPatches
                 else if (value.active)
                 {
                     value.intervalTimeCounter = 0.01f;
-                    if (Configuration.PluginConfig.Instance.strength_continuous > 0)
+                    if (GameState.sabersAreClashing && (Configuration.PluginConfig.Instance.strength_saber > 0))
                     {
-                        ____vrPlatformHelper.TriggerHapticPulse(key, Configuration.PluginConfig.Instance.strength_continuous);
+                        ____vrPlatformHelper.TriggerHapticPulse(key, Configuration.PluginConfig.Instance.strength_saber);
+                    }
+                    else if (!GameState.sabersAreClashing && (Configuration.PluginConfig.Instance.strength_wall > 0))
+                    {
+                        ____vrPlatformHelper.TriggerHapticPulse(key, Configuration.PluginConfig.Instance.strength_wall);
                     }
                     value.active = false;
                 }

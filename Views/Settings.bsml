@@ -6,19 +6,23 @@
     <bool-setting value="enabled" text="Enable RumbleMod" hover-hint="I'm okay to go."></bool-setting>
   </horizontal>
   <horizontal horizontal-fit="PreferredSize">
-    <slider-setting apply-on-change="true" value="strength" text="HitNote Strength" hover-hint="The default value is 1.00. Values above 1.0 may only work in the OpenVR (Oculus) environment." min="0" max="3" increment="0.05"></slider-setting>
+    <slider-setting apply-on-change="true" value="strength" text="Note Strength" hover-hint="The default value is 1.00. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
   </horizontal>
   <horizontal horizontal-fit="PreferredSize">
-    <slider-setting apply-on-change="true" value="duration" text="HitNote Duration" hover-hint="The default is 0.13 (sec)." min="0" max="1" increment="0.01"></slider-setting>
+    <slider-setting apply-on-change="true" value="duration" text="Note Duration" hover-hint="The default is 0.13 (sec)." min="0" max="1" increment="0.01"></slider-setting>
   </horizontal>
   <horizontal horizontal-fit="PreferredSize">
-    <slider-setting apply-on-change="true" value="strength_continuous" text="Saber/Wall Strength" hover-hint="The default value is 1.00. Values above 1.0 may only work in the OpenVR (Oculus) environment." min="0" max="3" increment="0.05"></slider-setting>
+    <slider-setting apply-on-change="true" value="strength_saber" text="Saber Strength" hover-hint="The default value is 1.00. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
   </horizontal>
   <horizontal horizontal-fit="PreferredSize">
-    <text text="Change the numbers and check the feel with the button below."></text>
+    <slider-setting apply-on-change="true" value="strength_wall" text="Wall Strength" hover-hint="The default value is 1.00. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
   </horizontal>
   <horizontal horizontal-fit="PreferredSize">
-    <button text="HitNote Rumble" on-click="test_hitnote"></button>
-    <button text="Saber/Wall Rumble" on-click="test_saberwall"></button>
+    <horizontal horizontal-fit="PreferredSize" pad-right="5">
+      <text text="Rumble" align="Midline" font-size="5"></text>
+    </horizontal>      
+    <button text="Note" on-click="test_hitnote"></button>
+    <button text="Saber" on-click="test_hitsaber"></button>
+    <button text="Wall" on-click="test_hitwall"></button>
   </horizontal>
 </settings-container>

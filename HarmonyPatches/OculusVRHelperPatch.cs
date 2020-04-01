@@ -16,11 +16,15 @@ namespace RumbleMod.HarmonyPatches
             OVRHapticsClip hapticsClip;
             if (strength == Configuration.PluginConfig.Instance.strength)
             {
-                hapticsClip = SettingsController.instance.hapticsClipHitNote;
+                hapticsClip = SettingsController.instance.hapticsClipNote;
             }
-            else if (strength == Configuration.PluginConfig.Instance.strength_continuous)
+            else if (strength == Configuration.PluginConfig.Instance.strength_saber)
             {
-                hapticsClip = SettingsController.instance.hapticsClipContinuous;
+                hapticsClip = SettingsController.instance.hapticsClipSaber;
+            }
+            else if (strength == Configuration.PluginConfig.Instance.strength_wall)
+            {
+                hapticsClip = SettingsController.instance.hapticsClipWall;
             }
             else
             {
