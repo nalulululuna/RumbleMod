@@ -3,7 +3,7 @@
   "id": "RumbleMod",
   "name": "RumbleMod",
   "author": "Luluna",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Modify the controller rumble parameters.",
   "gameVersion": "1.8.0",
   "dependsOn": {

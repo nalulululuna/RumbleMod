@@ -12,5 +12,6 @@ namespace RumbleMod.Configuration
         public virtual float duration { get; set; } = 0.13f;
         public virtual float strength_saber { get; set; } = 1f;
         public virtual float strength_wall { get; set; } = 1f;
+        public virtual float strength_ui { get; set; } = 1f;
     }
 }

@@ -31,7 +31,7 @@ namespace RumbleMod
         public void InitWithConfig(Config conf)
         {
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
-            Logger.log.Debug("Config loaded");
+            Logger.log.Debug("Config loaded.");
         }
 
         [OnEnable]
@@ -70,7 +70,6 @@ namespace RumbleMod
         {
             try
             {
-                // Removes all patches with this HarmonyId
                 harmony.UnpatchAll(HarmonyId);
             }
             catch (Exception ex)

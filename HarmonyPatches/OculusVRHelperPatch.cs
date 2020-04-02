@@ -14,7 +14,12 @@ namespace RumbleMod.HarmonyPatches
         static bool Prefix(XRNode node, float strength, OVRHapticsClip ____hapticsClip)
         {
             OVRHapticsClip hapticsClip;
-            if (strength == Configuration.PluginConfig.Instance.strength)
+            // unless it's necessary, use the original haptics clip
+            if (strength == 1.0f)
+            {
+                hapticsClip = ____hapticsClip;
+            }
+            else if (strength == Configuration.PluginConfig.Instance.strength)
             {
                 hapticsClip = SettingsController.instance.hapticsClipNote;
             }
@@ -25,6 +30,10 @@ namespace RumbleMod.HarmonyPatches
             else if (strength == Configuration.PluginConfig.Instance.strength_wall)
             {
                 hapticsClip = SettingsController.instance.hapticsClipWall;
+            }
+            else if (strength == Configuration.PluginConfig.Instance.strength_ui)
+            {
+                hapticsClip = SettingsController.instance.hapticsClipUI;
             }
             else
             {
