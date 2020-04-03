@@ -129,7 +129,7 @@ namespace RumbleMod
         [UIAction("#apply")]
         public void OnApply()
         {
-            Logger.log.Info($"Apply: enabled={_modEnabled}, strength={_strength}, duration={_duration}, strength_saber={_strength_saber}, strength_wall={_strength_wall}, strength_ui={strength_ui}");
+            Logger.log?.Info($"Apply: enabled={_modEnabled}, strength={_strength}, duration={_duration}, strength_saber={_strength_saber}, strength_wall={_strength_wall}, strength_ui={strength_ui}");
             Configuration.PluginConfig.Instance.enabled = _modEnabled;
             Configuration.PluginConfig.Instance.strength = _strength;
             Configuration.PluginConfig.Instance.duration = _duration;
@@ -150,13 +150,13 @@ namespace RumbleMod
         private void Awake()
         {
             _isIndex = XRDevice.model.IndexOf("index", StringComparison.OrdinalIgnoreCase) >= 0;
-            Logger.log.Info($"XRDevice.model: {XRDevice.model}");
+            Logger.log?.Info($"XRDevice.model: {XRDevice.model}");
 
             _isOculusPlatform = XRSettings.loadedDeviceName.IndexOf("oculus", StringComparison.OrdinalIgnoreCase) >= 0;
-            Logger.log.Info($"XRSettings.loadedDeviceName: {XRSettings.loadedDeviceName}");
+            Logger.log?.Info($"XRSettings.loadedDeviceName: {XRSettings.loadedDeviceName}");
 
             ReadCurrentSettings();
-            Logger.log.Info($"Awake: enabled={_modEnabled}, strength={_strength}, duration={_duration}, strength_saber={_strength_saber}, strength_wall={_strength_wall}, strength_ui={_strength_ui}");
+            Logger.log?.Info($"Awake: enabled={_modEnabled}, strength={_strength}, duration={_duration}, strength_saber={_strength_saber}, strength_wall={_strength_wall}, strength_ui={_strength_ui}");
         }
 
         private void ReadCurrentSettings()
@@ -197,7 +197,7 @@ namespace RumbleMod
 
         private void RumbleTest(float strength, float duration)
         {
-            Logger.log.Info($"RumbleTest: strength={strength}, duration={duration}");
+            Logger.log?.Info($"RumbleTest: strength={strength}, duration={duration}");
 
             if (_vrPlatformHelper == null)
             {
@@ -229,7 +229,7 @@ namespace RumbleMod
             }
             else
             {
-                Logger.log.Critical("Error getting VRPlatformHelper");
+                Logger.log?.Critical("Error getting VRPlatformHelper");
             }
         }
 

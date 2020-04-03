@@ -130,9 +130,6 @@
     <EmbeddedResource Include="Views\Settings.bsml" />
     <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Memo.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="BuildTargets.targets" />
   <PropertyGroup>

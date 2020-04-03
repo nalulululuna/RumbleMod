@@ -20,16 +20,12 @@ namespace RumbleMod
         internal static string Name => "RumbleMod";
 
         [Init]
-        public Plugin(IPALogger logger)
+        public Plugin(IPALogger logger, Config conf)
         {
             instance = this;
             Logger.log = logger;
             Logger.log.Debug("Logger initialized.");
-        }
 
-        [Init]
-        public void InitWithConfig(Config conf)
-        {
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
             Logger.log.Debug("Config loaded.");
         }
@@ -56,13 +52,13 @@ namespace RumbleMod
             try
             {
                 SettingsController.instance.UpdateHapticsClips();
-                Logger.log.Debug("Applying Harmony patches.");
+                Logger.log?.Debug("Applying Harmony patches.");
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
             }
             catch (Exception ex)
             {
-                Logger.log.Critical("Error applying Harmony patches: " + ex.Message);
-                Logger.log.Debug(ex);
+                Logger.log?.Critical("Error applying Harmony patches: " + ex.Message);
+                Logger.log?.Debug(ex);
             }
         }
 
@@ -74,8 +70,8 @@ namespace RumbleMod
             }
             catch (Exception ex)
             {
-                Logger.log.Critical("Error removing Harmony patches: " + ex.Message);
-                Logger.log.Debug(ex);
+                Logger.log?.Critical("Error removing Harmony patches: " + ex.Message);
+                Logger.log?.Debug(ex);
             }
         }
     }

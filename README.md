@@ -1,29 +1,35 @@
 # RumbleMod for Beat Saber
+![RumbleMod](https://user-images.githubusercontent.com/62907586/78209936-7d7d8e00-74e3-11ea-909f-555895f2ee8c.jpg)
+
 A Beat Saber mod to modify the rumble parameters on hitting a note, saber, wall and ui.
 
 Don't expect too much, because you can't make the rumble stronger than the hardware specs.  
 The strength values above 1.0 may only work in the OculusVR environment(*),  
 but the combination of numbers changes how you feel the rumble, so try it out.
 
-FYI. My current settings for Valve Index.
-- HitNote Strength: 0.50
-- HitNote Duration: 0.15
+For example, the following is my settings for Valve Index.  
+With these, I can feel slightly stronger rumble than the original.
+- Note Strength: 0.50
+- Note Duration: 0.16
 
-With this setting, you can feel slightly stronger rumble than the original.
+This mod just calls a generic API, so there shouldn't be any problems,  
+but I don't take any responsibility for any trouble. **Use at you own risk**.
 
-Download: https://github.com/nalulululuna/RumbleMod/releases/latest
+(*) The OculusVR environment is one that uses an Oculus HMD and meets one of the following conditions.
+- The base game is Oculus Store version
+- Steam version running with a launch option "-vrmode oculus"
 
-> (*) OculusVR environment means...
-> - Using Oculus HMD
-> - Beat Saber downloaded from Oculus Store or SteamVR version running with "-vrmode oculus"
+## Download
+https://github.com/nalulululuna/RumbleMod/releases/latest
 
-## DependsOn
+## Dependencies
 BeatSaberMarkupLanguage  
 BS Utils
 
-## Image
-![RumbleMod](https://user-images.githubusercontent.com/62907586/78046321-fd0b4000-73b1-11ea-8dff-054cc8614527.jpg)
+## Licence
+MIT License
 
-## Me
+## Author
+Discord: nalulululuna#8497  
 Twitter: https://twitter.com/nalulululuna  
-Discord: nalulululuna#8497
+My Youtube Channel: https://www.youtube.com/channel/UCTxORw6LVVRYGNFCAijCUYw/

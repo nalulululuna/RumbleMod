@@ -88,7 +88,7 @@ namespace RumbleMod.HarmonyPatches
             }
 
             // TriggerHapticPulse param not found
-            Logger.log.Critical("Error applying a Harmony patch to VRInputModule.");
+            Logger.log?.Critical("Error applying a Harmony patch to VRInputModule.");
             return instructions;
         }
     }
