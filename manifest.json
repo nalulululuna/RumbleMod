@@ -2,10 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
   "id": "RumbleMod",
   "name": "RumbleMod",
-  "author": "Luluna",
+  "author": "Nalulu Luluna",
   "version": "1.0.0",
   "description": "Modify the controller rumble parameters.",
-  "gameVersion": "1.8.0",
+  "gameVersion": "1.9.1",
   "dependsOn": {
     "BeatSaberMarkupLanguage": "^1.2.0",
     "BS Utils": "^1.4.4"

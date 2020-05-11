@@ -6,6 +6,7 @@ using UnityEngine.XR;
 
 namespace RumbleMod.HarmonyPatches
 {
+    // void HitNote(XRNode node)
     [HarmonyPatch(typeof(HapticFeedbackController))]
     [HarmonyPatch("HitNote")]
     [HarmonyPatch(new Type[] {
@@ -22,6 +23,7 @@ namespace RumbleMod.HarmonyPatches
         }
     }
 
+    // void LateUpdate()
     [HarmonyPatch(typeof(HapticFeedbackController))]
     [HarmonyPatch("LateUpdate")]
     internal static class HapticFeedbackControllerLateUpdate

@@ -10,6 +10,7 @@ namespace RumbleMod
 
 namespace RumbleMod.HarmonyPatches
 {
+    // void LateUpdate()
     [HarmonyPatch(typeof(SaberClashEffect))]
     [HarmonyPatch("LateUpdate")]
     internal static class SaberClashEffectLateUpdate

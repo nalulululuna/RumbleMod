@@ -4,6 +4,7 @@ using UnityEngine.XR;
 
 namespace RumbleMod.HarmonyPatches
 {
+    // void TriggerHapticPulse(XRNode node, float strength = 1f)
     [HarmonyPatch(typeof(OculusVRHelper))]
     [HarmonyPatch("TriggerHapticPulse")]
     [HarmonyPatch(new Type[] {

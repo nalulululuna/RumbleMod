@@ -110,7 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HarmonyPatches\VRInputModuleHandlePointerExitAndEnterPatch.cs" />
+    <Compile Include="HarmonyPatches\VRInputModulePatch.cs" />
     <Compile Include="HarmonyPatches\SaberClashEffectPatch.cs" />
     <Compile Include="HarmonyPatches\OculusVRHelperPatch.cs" />
     <Compile Include="HarmonyPatches\HapticFeedbackControllerPatch.cs" />

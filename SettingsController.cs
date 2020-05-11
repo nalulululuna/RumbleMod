@@ -46,8 +46,8 @@ namespace RumbleMod
         private void OnRecommendedClick()
         {
             _modEnabled = true;
-            _strength = _isOculusPlatform ? 3.0f : _isIndex ? 0.5f : 1.0f;
-            _duration = _isOculusPlatform ? 0.13f : 0.15f;
+            _strength = _isOculusPlatform ? 3.0f : _isIndex ? 0.55f : 1.0f;
+            _duration = _isOculusPlatform ? 0.13f : 0.16f;
             _strength_saber = 1.0f;
             _strength_wall = 1.0f;
             _strength_ui = _isOculusPlatform ? 1.0f : 0.25f;
