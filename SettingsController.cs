@@ -139,6 +139,9 @@ namespace RumbleMod
 
             if (_modEnabled)
             {
+                // make sure to remove previous patches
+                Plugin.RemoveHarmonyPatches();
+
                 Plugin.ApplyHarmonyPatches();
             }
             else
