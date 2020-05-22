@@ -36,26 +36,29 @@ namespace RumbleMod.HarmonyPatches
 
         static bool Prefix(HapticFeedbackController __instance, Dictionary<XRNode, ContinousRumbleParams> ____continuousRumbles, VRPlatformHelper ____vrPlatformHelper)
         {
-            foreach (KeyValuePair<XRNode, ContinousRumbleParams> keyValuePair in ____continuousRumbles)
+            foreach (KeyValuePair<XRNode, ContinousRumbleParams> nodeAndRumbleParam in ____continuousRumbles)
             {
-                XRNode key = keyValuePair.Key;
-                ContinousRumbleParams value = keyValuePair.Value;
-                if (value.intervalTimeCounter > 0f)
+                XRNode node = nodeAndRumbleParam.Key;
+                ContinousRumbleParams rumbleParam = nodeAndRumbleParam.Value;
+                if (rumbleParam.intervalTimeCounter <= 0f)
                 {
-                    value.intervalTimeCounter -= Time.deltaTime;
+                    if (rumbleParam.active)
+                    {
+                        rumbleParam.intervalTimeCounter = 0.01f;
+                        if (GameState.sabersAreClashing && (Configuration.PluginConfig.Instance.strength_saber > 0))
+                        {
+                            ____vrPlatformHelper.TriggerHapticPulse(node, Configuration.PluginConfig.Instance.strength_saber);
+                        }
+                        else if (!GameState.sabersAreClashing && (Configuration.PluginConfig.Instance.strength_wall > 0))
+                        {
+                            ____vrPlatformHelper.TriggerHapticPulse(node, Configuration.PluginConfig.Instance.strength_wall);
+                        }
+                        rumbleParam.active = false;
+                    }
                 }
-                else if (value.active)
+                else
                 {
-                    value.intervalTimeCounter = 0.01f;
-                    if (GameState.sabersAreClashing && (Configuration.PluginConfig.Instance.strength_saber > 0))
-                    {
-                        ____vrPlatformHelper.TriggerHapticPulse(key, Configuration.PluginConfig.Instance.strength_saber);
-                    }
-                    else if (!GameState.sabersAreClashing && (Configuration.PluginConfig.Instance.strength_wall > 0))
-                    {
-                        ____vrPlatformHelper.TriggerHapticPulse(key, Configuration.PluginConfig.Instance.strength_wall);
-                    }
-                    value.active = false;
+                    rumbleParam.intervalTimeCounter -= Time.deltaTime;
                 }
             }
             return false;

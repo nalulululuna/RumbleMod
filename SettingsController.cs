@@ -226,8 +226,8 @@ namespace RumbleMod
                 }
                 else
                 {
-                    StartCoroutine(OneShotRumbleCoroutine(XRNode.RightHand, duration, strength));
-                    StartCoroutine(OneShotRumbleCoroutine(XRNode.LeftHand, duration, strength));
+                    StartCoroutine(RumbleTestCoroutine(XRNode.RightHand, duration, strength));
+                    StartCoroutine(RumbleTestCoroutine(XRNode.LeftHand, duration, strength));
                 }
             }
             else
@@ -236,23 +236,17 @@ namespace RumbleMod
             }
         }
 
-        private IEnumerator OneShotRumbleCoroutine(XRNode node, float duration, float impulseStrength, float intervalDuration = 0f)
+        private IEnumerator RumbleTestCoroutine(XRNode node, float duration, float strength)
         {
-            long startTicks = DateTime.UtcNow.Ticks;
-            float num = (float)(DateTime.UtcNow.Ticks - startTicks) / 1E+07f;
-            float startTime = num;
-            this._vrPlatformHelper.TriggerHapticPulse(node, impulseStrength);
-            while (num - startTime < duration)
+            long initialTicks = DateTime.UtcNow.Ticks;
+            float current = (float)(DateTime.UtcNow.Ticks - initialTicks) / 10000000;
+            float initialTime = current;
+            _vrPlatformHelper.TriggerHapticPulse(node, strength);
+            while (current - initialTime < duration)
             {
-                float intervalStartTime = num;
                 yield return null;
-                num = (float)(DateTime.UtcNow.Ticks - startTicks) / 1E+07f;
-                while (num - intervalStartTime < intervalDuration)
-                {
-                    yield return null;
-                    num = (float)(DateTime.UtcNow.Ticks - startTicks) / 1E+07f;
-                }
-                this._vrPlatformHelper.TriggerHapticPulse(node, impulseStrength);
+                current = (float)(DateTime.UtcNow.Ticks - initialTicks) / 10000000;
+                _vrPlatformHelper.TriggerHapticPulse(node, strength);
             }
             yield break;
         }
