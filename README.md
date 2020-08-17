@@ -32,12 +32,12 @@ MIT License
 ----
 ## Advertisement
 
-My YouTube Channel Subscribe  
-https://www.youtube.com/channel/UCTxORw6LVVRYGNFCAijCUYw?sub_confirmation=1
+My YouTube Channel  
+https://youtube.com/naluluna
 
 My Beat Saber Playlists  
-Songs: https://www.youtube.com/playlist?list=PLCy2c6iKFgOFgdTBargvj7RPo1TXP0sx1  
-Jokes: https://www.youtube.com/playlist?list=PLCy2c6iKFgOGhgJnusH8AM0fPcAEpEAJL
+Songs: https://youtube.com/playlist?list=PLCy2c6iKFgOFgdTBargvj7RPo1TXP0sx1  
+Jokes: https://youtube.com/playlist?list=PLCy2c6iKFgOGhgJnusH8AM0fPcAEpEAJL
 
 Twitter  
 https://twitter.com/nalulululuna
