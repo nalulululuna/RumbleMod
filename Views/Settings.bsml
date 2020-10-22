@@ -1,40 +1,74 @@
 ﻿<settings-container>
-  <horizontal horizontal-fit="PreferredSize" spacing="4" child-align="MiddleCenter">
-    <text text="Use at your own risk!" font-size="5" color="red"></text>
-    <clickable-text text="Current" on-click="current_click" hover-hint="Read current settings."></clickable-text>
-    <text text="|" font-size="5" ></text>
-    <clickable-text text="Default" on-click="default_click" hover-hint="I'll pass this time."></clickable-text>
-    <text text="|" font-size="5" ></text>
-    <clickable-text text="Recommended" on-click="recommended_click" hover-hint="I'm okay to go."></clickable-text>
+  <horizontal horizontal-fit="PreferredSize" spacing="4">
+    <text text="Use at your own risk!" font-size="4" color="red"></text>
+    <clickable-text text="Current" font-size="4" on-click="current_click" hover-hint="Read current settings."></clickable-text>
+    <text text="|" font-size="4"></text>
+    <clickable-text text="Default" font-size="4" on-click="default_click" hover-hint="I'll pass this time."></clickable-text>
+    <text text="|" font-size="4"></text>
+    <clickable-text text="Recommended" font-size="4" on-click="recommended_click" hover-hint="I'm okay to go."></clickable-text>
   </horizontal>
-  <horizontal horizontal-fit="PreferredSize" spacing="2" pad-right="14">
+
+  <horizontal horizontal-fit="PreferredSize">
     <bool-setting value="enabled" text="Enable RumbleMod" hover-hint="I'm okay to go."></bool-setting>
   </horizontal>
-  <horizontal horizontal-fit="PreferredSize" spacing="2">
-    <slider-setting apply-on-change="true" value="strength" text="Note Strength" hover-hint="The default value is 1.00. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
-    <horizontal horizontal-fit="PreferredSize">
-      <clickable-text text='Rumble' align='Center' on-click='rumble_note_click'></clickable-text>
-    </horizontal>
-  </horizontal>
-  <horizontal horizontal-fit="PreferredSize" pad-right="14">
-    <slider-setting apply-on-change="true" value="duration" text="Note Duration" hover-hint="The default is 0.13 (sec)." min="0" max="1" increment="0.01"></slider-setting>
-  </horizontal>
-  <horizontal horizontal-fit="PreferredSize" spacing="2">
-    <slider-setting apply-on-change="true" value="strength_saber" text="Saber Strength" hover-hint="The default value is 1.00. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
-    <horizontal horizontal-fit="PreferredSize">
-      <clickable-text text='Rumble' align='Center' on-click='rumble_saber_click'></clickable-text>
-    </horizontal>
-  </horizontal>
+
   <horizontal horizontal-fit="PreferredSize">
-    <slider-setting apply-on-change="true" value="strength_wall" text="Wall Strength" hover-hint="The default value is 1.00. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
-    <horizontal horizontal-fit="PreferredSize" pad-left="2">
-      <clickable-text text='Rumble' align='Center' on-click='rumble_wall_click'></clickable-text>
+    <horizontal horizontal-fit="PreferredSize">
+      <text text="Note Strength" font-size="4" italics="true"></text>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" pad-left="-27" pad-right="1">
+      <slider-setting apply-on-change="true" value="strength" text="" hover-hint="The default value is 1.00" min="0" max="1" increment="0.05"></slider-setting>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize">
+      <clickable-text text="Rumble" font-size="4" italics="true" on-click="rumble_note_click"></clickable-text>
     </horizontal>
   </horizontal>
-  <horizontal horizontal-fit="PreferredSize" spacing="2">
-    <slider-setting apply-on-change="true" value="strength_ui" text="UI Strength" hover-hint="The default value is 0.25 for SteamVR, 1.0 for OculusVR. Values above 1.00 may only work in the OculusVR environment." min="0" max="3" increment="0.05"></slider-setting>
+
+  <horizontal horizontal-fit="PreferredSize">
+    <horizontal horizontal-fit="PreferredSize" pad-right="1">
+      <text text="Note Duration" font-size="4" italics="true"></text>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" pad-left="-27" pad-right="1">
+      <slider-setting apply-on-change="true" value="duration" text="" hover-hint="The default is 0.14 (sec)" min="0" max="1" increment="0.01"></slider-setting>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" pad-right="9">
+      <text text="" font-size="4"></text>
+    </horizontal>
+  </horizontal>
+
+  <horizontal horizontal-fit="PreferredSize">
     <horizontal horizontal-fit="PreferredSize">
-      <clickable-text text='Rumble' align='Center' on-click='rumble_ui_click'></clickable-text>
+      <text text="Saber Strength" font-size="4" italics="true"></text>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" pad-left="-27" pad-right="1">
+      <slider-setting apply-on-change="true" value="strength_saber" text="" hover-hint="The default value is 1.00" min="0" max="1" increment="0.05"></slider-setting>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize">
+      <clickable-text text="Rumble" font-size="4" italics="true" on-click="rumble_saber_click"></clickable-text>
+    </horizontal>
+  </horizontal>
+
+  <horizontal horizontal-fit="PreferredSize">
+    <horizontal horizontal-fit="PreferredSize" pad-right="2">
+      <text text="Wall Strength" font-size="4" italics="true"></text>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" pad-left="-27" pad-right="1">
+      <slider-setting apply-on-change="true" value="strength_wall" text="" hover-hint="The default value is 1.00" min="0" max="1" increment="0.05"></slider-setting>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize">
+      <clickable-text text="Rumble" font-size="4" italics="true" on-click="rumble_wall_click"></clickable-text>
+    </horizontal>
+  </horizontal>
+
+  <horizontal horizontal-fit="PreferredSize">
+    <horizontal horizontal-fit="PreferredSize" child-align="MiddleLeft" pad-right="5">
+      <text text="UI Strength" font-size="4" italics="true"></text>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" pad-left="-27" pad-right="1" child-align="MiddleLeft">
+      <slider-setting apply-on-change="true" value="strength_ui" text="" hover-hint="The default value is 1.00" min="0" max="1" increment="0.05"></slider-setting>
+    </horizontal>
+    <horizontal horizontal-fit="PreferredSize" child-align="MiddleLeft">
+      <clickable-text text="Rumble" font-size="4" italics="true" on-click="rumble_ui_click"></clickable-text>
     </horizontal>
   </horizontal>
 </settings-container>

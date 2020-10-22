@@ -1,11 +1,13 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Parser;
 using IPA.Utilities;
+using Libraries.HM.HMLib.VR;
 using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
+using VRUIControls;
 
 namespace RumbleMod
 {
@@ -13,12 +15,8 @@ namespace RumbleMod
     {
         private bool _isIndex;
         private bool _isOculusPlatform;
-        private VRPlatformHelper _vrPlatformHelper;
-
-        public OVRHapticsClip hapticsClipNote { get; private set; }
-        public OVRHapticsClip hapticsClipSaber { get; private set; }
-        public OVRHapticsClip hapticsClipWall { get; private set; }
-        public OVRHapticsClip hapticsClipUI { get; private set; }
+        private HapticFeedbackController _hapticFeedbackController;
+        private HapticPresetSO rumblePreset = new HapticPresetSO();
 
         [UIParams]
         BSMLParserParams parserParams;
@@ -35,10 +33,10 @@ namespace RumbleMod
         {
             _modEnabled = false;
             _strength = 1.0f;
-            _duration = 0.13f;
+            _duration = 0.14f;
             _strength_saber = 1.0f;
             _strength_wall = 1.0f;
-            _strength_ui = _isOculusPlatform ? 1.0f : 0.25f;
+            _strength_ui = 1.0f;
             parserParams.EmitEvent("cancel");
         }
 
@@ -46,11 +44,11 @@ namespace RumbleMod
         private void OnRecommendedClick()
         {
             _modEnabled = true;
-            _strength = _isOculusPlatform ? 3.0f : _isIndex ? 0.55f : 1.0f;
-            _duration = _isOculusPlatform ? 0.13f : 0.16f;
-            _strength_saber = 1.0f;
-            _strength_wall = 1.0f;
-            _strength_ui = _isOculusPlatform ? 1.0f : 0.25f;
+            _strength = _isIndex ? 0.55f : 1.0f;
+            _duration = _isIndex ? 0.16f : 0.14f;
+            _strength_saber = 0.25f;
+            _strength_wall = 0.25f;
+            _strength_ui = 0.5f;
             parserParams.EmitEvent("cancel");
         }
 
@@ -123,7 +121,7 @@ namespace RumbleMod
         [UIAction("rumble_ui_click")]
         private void OnRumbleUIClick()
         {
-            RumbleTest(_strength_ui, 0);
+            RumbleTest(_strength_ui, 0.02f);
         }
 
         [UIAction("#apply")]
@@ -143,6 +141,9 @@ namespace RumbleMod
                 Plugin.RemoveHarmonyPatches();
 
                 Plugin.ApplyHarmonyPatches();
+
+                HarmonyPatches.NoteCutHapticEffectHitNote.rumblePreset._duration = Configuration.PluginConfig.Instance.duration;
+                HarmonyPatches.NoteCutHapticEffectHitNote.rumblePreset._strength = Configuration.PluginConfig.Instance.strength;
             }
             else
             {
@@ -172,92 +173,30 @@ namespace RumbleMod
             _strength_ui = Configuration.PluginConfig.Instance.strength_ui;
         }
 
-        private OVRHapticsClip CreateHapticsClip(float strength)
-        {
-            int count = Mathf.RoundToInt(strength * 4.0f);
-            if (count > 2)
-            {
-                OVRHapticsClip hapticsClip = new OVRHapticsClip(2 + count);
-                hapticsClip.WriteSample(0);
-                hapticsClip.WriteSample(0);
-                for (int i = 0; i < count; i++)
-                {
-                    byte sample = (i == 0) ? (byte)128 : byte.MaxValue;
-                    hapticsClip.WriteSample(sample);
-                }
-                return hapticsClip;
-            }
-            else
-            {
-                OVRHapticsClip hapticsClip = new OVRHapticsClip(4);
-                hapticsClip.WriteSample(0);
-                hapticsClip.WriteSample((byte)(16 * count));
-                hapticsClip.WriteSample((byte)(32 * count));
-                hapticsClip.WriteSample((byte)(64 * count));
-                return hapticsClip;
-            }
-        }
-
         private void RumbleTest(float strength, float duration)
         {
             Logger.log?.Info($"RumbleTest: strength={strength}, duration={duration}");
 
-            if (_vrPlatformHelper == null)
+            if (_hapticFeedbackController == null)
             {
-                _vrPlatformHelper = Resources.FindObjectsOfTypeAll<VRPlatformHelper>().FirstOrDefault();
-                if (_vrPlatformHelper == null)
+                VRInputModule vrInputModule = Resources.FindObjectsOfTypeAll<VRInputModule>().FirstOrDefault();
+                if (vrInputModule != null)
                 {
-                    _vrPlatformHelper = new GameObject().AddComponent<VRPlatformHelper>();
+                    _hapticFeedbackController = vrInputModule.GetField<HapticFeedbackController, VRInputModule>("_hapticFeedbackController");
                 }
             }
 
-            if (_vrPlatformHelper != null)
+            if (_hapticFeedbackController != null)
             {
-                OculusVRHelper oculusVRHelper = _vrPlatformHelper.GetField<OculusVRHelper, VRPlatformHelper>("_oculusVRHelper");
-                if (oculusVRHelper != null)
-                {
-                    oculusVRHelper.SetField<OculusVRHelper, OVRHapticsClip>("_hapticsClip", CreateHapticsClip(strength));
-                }
-
-                if (duration == 0)
-                {
-                    _vrPlatformHelper.TriggerHapticPulse(XRNode.RightHand, _strength_ui);
-                    _vrPlatformHelper.TriggerHapticPulse(XRNode.LeftHand, _strength_ui);
-                }
-                else
-                {
-                    StartCoroutine(RumbleTestCoroutine(XRNode.RightHand, duration, strength));
-                    StartCoroutine(RumbleTestCoroutine(XRNode.LeftHand, duration, strength));
-                }
+                rumblePreset._strength = strength;
+                rumblePreset._duration = duration;
+                _hapticFeedbackController.PlayHapticFeedback(XRNode.LeftHand, rumblePreset);
+                _hapticFeedbackController.PlayHapticFeedback(XRNode.RightHand, rumblePreset);
             }
             else
             {
-                Logger.log?.Critical("Error getting VRPlatformHelper");
+                Logger.log?.Critical("Error getting HapticFeedbackController");
             }
-        }
-
-        private IEnumerator RumbleTestCoroutine(XRNode node, float duration, float strength)
-        {
-            long initialTicks = DateTime.UtcNow.Ticks;
-            float current = (float)(DateTime.UtcNow.Ticks - initialTicks) / 10000000;
-            float initialTime = current;
-            _vrPlatformHelper.TriggerHapticPulse(node, strength);
-            while (current - initialTime < duration)
-            {
-                yield return null;
-                current = (float)(DateTime.UtcNow.Ticks - initialTicks) / 10000000;
-                _vrPlatformHelper.TriggerHapticPulse(node, strength);
-            }
-            yield break;
-        }
-
-        // make sure call this before patching OculusVRHelper.TriggerHapticPulse
-        public void UpdateHapticsClips()
-        {
-            hapticsClipNote = CreateHapticsClip(Configuration.PluginConfig.Instance.strength);
-            hapticsClipSaber = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_saber);
-            hapticsClipWall = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_wall);
-            hapticsClipUI = CreateHapticsClip(Configuration.PluginConfig.Instance.strength_ui);
         }
     }
 }
