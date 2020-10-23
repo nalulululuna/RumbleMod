@@ -1,5 +1,5 @@
 # RumbleMod for Beat Saber
-![RumbleMod](https://user-images.githubusercontent.com/62907586/96888457-9b7f0000-14c0-11eb-9a07-2bb2da58b853.jpg)
+![RumbleMod](https://user-images.githubusercontent.com/62907586/96944746-a8c6d980-1516-11eb-939f-e8f4d83a1d0b.jpg)
 
 A Beat Saber mod to modify the rumble parameters on hitting a note, saber, wall and ui.
 
@@ -20,7 +20,7 @@ With these, I can feel slightly stronger rumble than the original.
 This mod just calls a generic API, so there shouldn't be any problems,  
 but I don't take any responsibility for any trouble. **Use at you own risk**.
 
-(*) Since Beat Saber v1.12, setting the strength value above 1.0 is no longer useful.  
+(*) Since Beat Saber v1.12, the strength value above 1.0 is no longer useful.  
 So I lowered the maximum value from 3.0 to 1.0.
 
 ## Download
