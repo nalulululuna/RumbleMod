@@ -37,6 +37,8 @@ namespace RumbleMod
             if (Configuration.PluginConfig.Instance.enabled)
             {
                 ApplyHarmonyPatches();
+                HarmonyPatches.NoteCutHapticEffectHitNote.rumblePreset._duration = Configuration.PluginConfig.Instance.duration;
+                HarmonyPatches.NoteCutHapticEffectHitNote.rumblePreset._strength = Configuration.PluginConfig.Instance.strength;
             }
         }
 
