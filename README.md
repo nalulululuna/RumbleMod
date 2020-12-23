@@ -47,4 +47,4 @@ Twitter
 https://twitter.com/nalulululuna
 
 Discord  
-nalulululuna#8497 (not very active)
+~~nalulululuna#8497~~ (away from discord for a while)
