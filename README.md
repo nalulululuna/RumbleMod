@@ -24,7 +24,8 @@ but I don't take any responsibility for any trouble. **Use at you own risk**.
 So I lowered the maximum value from 3.0 to 1.0.
 
 ## Download
-https://github.com/nalulululuna/RumbleMod/releases/latest
+https://nalulululuna.fanbox.cc/posts/1804299  
+RumbleMod is in the middle of this page.  
 
 ## Dependencies
 BeatSaberMarkupLanguage  
@@ -36,12 +37,11 @@ MIT License
 ----
 ## Advertisement
 
+My Mods  
+https://nalulululuna.fanbox.cc/posts/1804299  
+
 My YouTube Channel  
 https://youtube.com/naluluna
-
-My Beat Saber Playlists  
-Songs: https://youtube.com/playlist?list=PLCy2c6iKFgOFgdTBargvj7RPo1TXP0sx1  
-Jokes: https://youtube.com/playlist?list=PLCy2c6iKFgOGhgJnusH8AM0fPcAEpEAJL
 
 Twitter  
 https://twitter.com/nalulululuna
